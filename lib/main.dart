@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'presentation/home/bloc/products/products_bloc.dart';
 
 import 'data/datasources/authentication/auth_local_datasource.dart';
 import 'presentation/authentication/bloc/login/login_bloc.dart';
 import 'presentation/authentication/bloc/register/register_bloc.dart';
 import 'presentation/authentication/login_page.dart';
+import 'presentation/cart/bloc/bloc/cart_bloc.dart';
 import 'presentation/dashboard/dashboard_page.dart';
+import 'presentation/home/bloc/products/products_bloc.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,7 +28,8 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) =>
-                ProductsBloc()..add(const ProductsEvent.getAll()))
+                ProductsBloc()..add(const ProductsEvent.getAll())),
+        BlocProvider(create: (context) => CartBloc())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -11,7 +11,7 @@ class ProductRemoteDatasource {
     if (response.statusCode == 200) {
       return Right(ProductResponseModel.fromJson(response.body));
     } else {
-      return const Left('Server Error');
+      return Left(response.body);
     }
   }
 }

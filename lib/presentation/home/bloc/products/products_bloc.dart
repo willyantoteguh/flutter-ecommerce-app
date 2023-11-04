@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,7 +16,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       emit(const _Loading());
       final response = await ProductRemoteDatasource().getAllProduct();
       response.fold(
-        (l) => emit(_Error(l)),
+        (l) {
+          log(l.toString());
+          emit(_Error(l));
+        },
         (r) => emit(_Loaded(r)),
       );
     });
