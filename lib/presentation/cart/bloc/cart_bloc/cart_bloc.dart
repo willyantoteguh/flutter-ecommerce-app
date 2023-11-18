@@ -9,6 +9,11 @@ part 'cart_bloc.freezed.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(const _Loaded([])) {
+    on<_Started>((event, emit) {
+      emit(const _Loading());
+      emit(const _Loaded([]));
+    });
+
     on<_Add>((event, emit) {
       final currentState = state as _Loaded;
 

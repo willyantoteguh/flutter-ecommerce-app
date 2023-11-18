@@ -4,9 +4,9 @@ import 'package:flutter_ecommerce_app/common/extensions/int_ext.dart';
 
 import '../../../common/components/spaces.dart';
 import '../../../common/constants/colors.dart';
-import '../../../common/constants/images.dart' as localImages;
+import '../../../common/constants/images.dart' as assetImages;
 import '../../../common/constants/variables.dart';
-import '../bloc/bloc/cart_bloc.dart';
+import '../bloc/cart_bloc/cart_bloc.dart';
 import 'cart_model.dart';
 
 class CartItemWidget extends StatefulWidget {
@@ -63,7 +63,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     InkWell(
                       onTap: () {},
                       child: const ImageIcon(
-                        AssetImage(localImages.Images.iconTrash),
+                        AssetImage(assetImages.Images.iconTrash),
                         size: 24.0,
                       ),
                     ),

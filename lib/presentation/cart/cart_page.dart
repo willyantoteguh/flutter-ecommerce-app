@@ -6,7 +6,10 @@ import '../../common/components/row_text.dart';
 import '../../common/components/spaces.dart';
 import '../../common/constants/colors.dart';
 import '../../common/extensions/int_ext.dart';
-import 'bloc/bloc/cart_bloc.dart';
+import '../../data/models/requests/order_request_model.dart';
+import '../payment/page/payment_page.dart';
+import 'bloc/cart_bloc/cart_bloc.dart';
+import 'bloc/order_bloc/order_bloc.dart';
 import 'widgets/cart_item_widget.dart';
 
 class CartPage extends StatefulWidget {
@@ -19,6 +22,8 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  List<Item> items = [];
+  int allTotalPrice = 0;
   @override
   void initState() {
     super.initState();
@@ -96,32 +101,87 @@ class _CartPageState extends State<CartPage> {
                   },
                 ),
                 const SpaceHeight(12.0),
-                GeneralRowText(
+                const GeneralRowText(
                   label: 'Biaya Pengiriman',
-                  value: 150000.currencyFormatRp,
+                  value: "Bebas biaya pengiriman",
                 ),
                 const SpaceHeight(40.0),
                 const Divider(color: ColorName.border),
                 const SpaceHeight(12.0),
-                GeneralRowText(
-                  label: 'Total Harga',
-                  value: 1900000.currencyFormatRp,
-                  valueColor: ColorName.primary,
-                  fontWeight: FontWeight.w700,
-                ),
+                BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+                  return state.maybeWhen(loaded: (carts) {
+                    int totalPriceCalculate = 0;
+
+                    for (var element in carts) {
+                      totalPriceCalculate +=
+                          int.parse(element.product.attributes.price) *
+                              element.quantity;
+                    }
+                    allTotalPrice = totalPriceCalculate;
+
+                    items = carts
+                        .map(
+                          (e) => Item(
+                            id: e.product.id,
+                            productName: e.product.attributes.name,
+                            qty: e.quantity,
+                            price: int.parse(e.product.attributes.price),
+                          ),
+                        )
+                        .toList();
+                    return GeneralRowText(
+                      label: 'Total Harga',
+                      value: totalPriceCalculate.currencyFormatRp,
+                      valueColor: ColorName.primary,
+                      fontWeight: FontWeight.w700,
+                    );
+                  }, orElse: () {
+                    return GeneralRowText(
+                      label: 'Total Harga',
+                      value: 0.currencyFormatRp,
+                    );
+                  });
+                }),
                 const SpaceHeight(16.0),
-                Button.filled(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const PaymentPage(
-                    //             url: '',
-                    //           )),
-                    // );
-                  },
-                  label: 'Bayar Sekarang',
-                ),
+                BlocConsumer<OrderBloc, OrderState>(listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {},
+                    success: (response) {
+                      context.read<CartBloc>().add(const CartEvent.started());
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return PaymentPage(
+                          invoiceUrl: response.invoiceUrl,
+                          orderId: response.externalId,
+                        );
+                      }));
+                    },
+                  );
+                }, builder: (context, state) {
+                  return state.maybeWhen(orElse: () {
+                    return Button.filled(
+                      onPressed: () {
+                        var order = OrderRequestModel(
+                          data: Data(
+                            items: items,
+                            totalPrice: allTotalPrice,
+                            deliveryAddress: 'Jeparaloka, Jepara',
+                            courierName: 'JNE',
+                            courierPrice: 0,
+                            status: 'waiting-payment',
+                          ),
+                        );
+                        context.read<OrderBloc>().add(OrderEvent.order(order));
+                      },
+                      label: 'Bayar Sekarang',
+                    );
+                  }, loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: ColorName.primary,
+                      ),
+                    );
+                  });
+                }),
               ],
             ),
           ),

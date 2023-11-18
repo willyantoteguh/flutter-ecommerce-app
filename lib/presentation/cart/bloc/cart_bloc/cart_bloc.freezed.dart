@@ -205,10 +205,10 @@ class __$$AddImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cart = freezed,
+    Object? cart = null,
   }) {
     return _then(_$AddImpl(
-      freezed == cart
+      null == cart
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
               as CartModel,
@@ -234,12 +234,11 @@ class _$AddImpl implements _Add {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddImpl &&
-            const DeepCollectionEquality().equals(other.cart, cart));
+            (identical(other.cart, cart) || other.cart == cart));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(cart));
+  int get hashCode => Object.hash(runtimeType, cart);
 
   @JsonKey(ignore: true)
   @override
@@ -345,10 +344,10 @@ class __$$RemoveImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cart = freezed,
+    Object? cart = null,
   }) {
     return _then(_$RemoveImpl(
-      freezed == cart
+      null == cart
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
               as CartModel,
@@ -374,12 +373,11 @@ class _$RemoveImpl implements _Remove {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoveImpl &&
-            const DeepCollectionEquality().equals(other.cart, cart));
+            (identical(other.cart, cart) || other.cart == cart));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(cart));
+  int get hashCode => Object.hash(runtimeType, cart);
 
   @JsonKey(ignore: true)
   @override
