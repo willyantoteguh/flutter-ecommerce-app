@@ -6,7 +6,7 @@ import '../../../common/components/spaces.dart';
 import '../../../common/constants/colors.dart';
 import '../../../common/constants/variables.dart';
 import '../../../data/models/responses/product_response_model.dart';
-import '../../cart/bloc/bloc/cart_bloc.dart';
+import '../../cart/bloc/cart_bloc/cart_bloc.dart';
 import '../../cart/widgets/cart_model.dart';
 import '../../detail_product/detail_product_page.dart';
 

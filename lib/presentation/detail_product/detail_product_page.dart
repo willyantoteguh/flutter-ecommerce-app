@@ -7,7 +7,7 @@ import '../../common/constants/colors.dart';
 import '../../common/constants/images.dart' as assets;
 import '../../common/constants/variables.dart';
 import '../../data/models/responses/product_response_model.dart';
-import '../cart/bloc/bloc/cart_bloc.dart';
+import '../cart/bloc/cart_bloc/cart_bloc.dart';
 import '../cart/cart_page.dart';
 import '../cart/widgets/cart_model.dart';
 import '../home/widgets/image_slider.dart';

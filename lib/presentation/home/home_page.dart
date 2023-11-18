@@ -5,7 +5,7 @@ import '../../common/components/search_input.dart';
 import '../../common/components/spaces.dart';
 import '../../common/constants/colors.dart';
 import '../../common/constants/images.dart';
-import '../cart/bloc/bloc/cart_bloc.dart';
+import '../cart/bloc/cart_bloc/cart_bloc.dart';
 import '../cart/cart_page.dart';
 import 'bloc/products/products_bloc.dart';
 import 'widgets/category_button.dart';
