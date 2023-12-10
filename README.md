@@ -1,3 +1,3 @@
 # flutter_ecommerce_app
 
-A new Flutter project.
+Flutter Ecommerce App - Fullstack FIC Batch 9 E-Commerce Flutter – Xendit – Raja Ongkir
